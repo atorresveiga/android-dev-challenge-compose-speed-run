@@ -1,18 +1,15 @@
-# Put title of your app here
+# We Trade Challenge #3
 
 <!--- Replace <OWNER> with your Github Username and <REPOSITORY> with the name of your repository. -->
 <!--- You can find both of these in the url bar when you open your repository in github. -->
-![Workflow result](https://github.com/<OWNER>/<REPOSITORY>/workflows/Check/badge.svg)
+![Workflow result](https://github.com/atorresveiga/android-dev-challenge-compose-speed-run/workflows/Check/badge.svg)
 
 
 ## :scroll: Description
-<!--- Describe your app in one or two sentences -->
-
+Speed run AndroidDevChallenge, mock as fast as you can
 
 ## :bulb: Motivation and Context
-<!--- Optionally point readers to interesting parts of your submission. -->
-<!--- What are you especially proud of? -->
-
+A challenge to test how sharp are my compose skills
 
 ## :camera_flash: Screenshots
 <!-- You can add more screenshots here if you like -->
