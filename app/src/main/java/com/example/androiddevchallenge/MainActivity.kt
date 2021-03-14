@@ -20,17 +20,28 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.androiddevchallenge.ui.theme.MyTheme
+import androidx.core.view.WindowCompat
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.androiddevchallenge.ui.HomeScreen
+import com.example.androiddevchallenge.ui.LoginScreen
+import com.example.androiddevchallenge.ui.WelcomeScreen
+import com.example.androiddevchallenge.ui.theme.WeTradeTheme
+import dev.chrisbanes.accompanist.insets.ProvideWindowInsets
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            MyTheme {
-                MyApp()
+            ProvideWindowInsets {
+                WeTradeTheme {
+                    WeTradeApp()
+                }
             }
         }
     }
@@ -38,24 +49,63 @@ class MainActivity : AppCompatActivity() {
 
 // Start building your app here!
 @Composable
-fun MyApp() {
+fun WeTradeApp() {
     Surface(color = MaterialTheme.colors.background) {
-        Text(text = "Ready... Set... GO!")
+        val navController = rememberNavController()
+        NavHost(
+            navController = navController,
+            startDestination = Screens.Welcome.route
+        ) {
+            SCREENS.forEach { screen ->
+                composable(screen.route) { screen.content(navController) }
+            }
+        }
     }
 }
 
 @Preview("Light Theme", widthDp = 360, heightDp = 640)
 @Composable
 fun LightPreview() {
-    MyTheme {
-        MyApp()
+    WeTradeTheme {
+        WeTradeApp()
     }
 }
 
 @Preview("Dark Theme", widthDp = 360, heightDp = 640)
 @Composable
 fun DarkPreview() {
-    MyTheme(darkTheme = true) {
-        MyApp()
+    WeTradeTheme(darkTheme = true) {
+        WeTradeApp()
     }
+}
+
+private val SCREENS =
+    listOf(
+        Screens.Welcome,
+        Screens.Login,
+        Screens.Home
+    )
+
+sealed class Screens(
+    val route: String,
+    val title: String,
+    val content: @Composable (navController: NavController) -> Unit
+) {
+    object Welcome : Screens(
+        "welcome",
+        "Welcome",
+        { navController -> WelcomeScreen(navController) }
+    )
+
+    object Home : Screens(
+        "home",
+        "Home",
+        { navController -> HomeScreen(navController) }
+    )
+
+    object Login : Screens(
+        "shop",
+        "Shop",
+        { navController -> LoginScreen(navController) }
+    )
 }
